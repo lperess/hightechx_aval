@@ -39,6 +39,23 @@ class UserService {
       return error;
     }
   }
+
+  async inactivate(id) {
+    try {
+      const modelResponse = await this.model.update(
+        {
+          active: 0,
+        },
+        {
+          where: id,
+        },
+      );
+
+      return modelResponse;
+    } catch (error) {
+      return error;
+    }
+  }
 }
 
 module.exports = UserService;

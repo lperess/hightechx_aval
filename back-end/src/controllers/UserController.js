@@ -7,6 +7,7 @@ class UserController {
     this.findAll = this.findAll.bind(this);
     this.create = this.create.bind(this);
     this.update = this.update.bind(this);
+    this.inactivate = this.inactivate.bind(this);
   }
 
   async findAll(_req, res, next) {
@@ -35,6 +36,17 @@ class UserController {
     try {
       const { user } = req.body;
       const serviceResponse = await this.service.update(user);
+
+      return res.status(200).json(serviceResponse);
+    } catch (error) {
+      return res.status(404).json(error.message);
+    }
+  }
+
+  async inactivate(req, res) {
+    try {
+      const { id } = req.params;
+      const serviceResponse = await this.service.inactivate(id);
 
       return res.status(200).json(serviceResponse);
     } catch (error) {
