@@ -17,6 +17,17 @@ class UserController {
       return null;
     }
   }
+
+  async create(req, res) {
+    try {
+      const { user } = req.body;
+      const serviceResponse = await this.service.create(user);
+
+      return res.status(201).json(serviceResponse);
+    } catch (error) {
+      return res.status(404).json(error);
+    }
+  }
 }
 
 module.exports = UserController;

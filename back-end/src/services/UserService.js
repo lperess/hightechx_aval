@@ -10,6 +10,16 @@ class UserService {
 
     return modelResponse;
   }
+
+  async create(user) {
+    try {
+      const modelResponse = await this.model.create(user);
+
+      return modelResponse;
+    } catch (error) {
+      return error;
+    }
+  }
 }
 
 module.exports = UserService;

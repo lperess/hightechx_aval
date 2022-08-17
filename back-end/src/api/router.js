@@ -6,5 +6,6 @@ const router = Router();
 const userController = new UserController();
 
 router.get('/users', userController.findAll);
+router.post('/users', userController.create);
 
 module.exports = router;
