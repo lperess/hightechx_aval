@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import api from '../services/api';
 
-function FormUser({ action, setCreating }) {
+function FormUser({ action, setCreating, setChangedUsers }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [cpf, setCpf] = useState('');
@@ -26,6 +26,7 @@ function FormUser({ action, setCreating }) {
         setBirthday('');
         setCreateError('');
         setCreating(false);
+        setChangedUsers((prev) => prev + 1);
       })
       .catch((e) => {
         setCreateError(e.message);
@@ -42,6 +43,24 @@ function FormUser({ action, setCreating }) {
     } else if (action === 'edit') {
       updateUser();
     }
+  };
+
+  const invalidInputs = () => {
+    let checks = 0;
+
+    if (name.length >= 3) {
+      checks += 1;
+    }
+
+    if (email.length >= 5) {
+      checks += 1;
+    }
+
+    if (cpf.length === 11) {
+      checks += 1;
+    }
+
+    return !(checks === 3);
   };
 
   const createErrorElement = <span>{createError}</span>;
@@ -107,6 +126,7 @@ function FormUser({ action, setCreating }) {
 
       <button
         type="submit"
+        disabled={invalidInputs()}
       >
         {action === 'create' ? 'Registrar usuário' : 'Editar usuário'}
       </button>
@@ -119,6 +139,7 @@ function FormUser({ action, setCreating }) {
 FormUser.propTypes = {
   action: PropTypes.string.isRequired,
   setCreating: PropTypes.func.isRequired,
+  setChangedUsers: PropTypes.func.isRequired,
 };
 
 export default FormUser;
