@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import FormUser from '../components/formUser';
 import SearchBar from '../components/SearchBar';
 import UserDetails from '../components/UserDetails';
 import UsersTable from '../components/UsersTable';
@@ -8,6 +9,7 @@ function UserManagement() {
   const [allUsers, setAllUsers] = useState([]);
   const [users, setUsers] = useState([]);
   const [userSelected, setUserSelected] = useState({});
+  const [creating, setCreating] = useState(false);
 
   useEffect(() => {
     api.get('/users').then((res) => {
@@ -30,11 +32,28 @@ function UserManagement() {
     }
   };
 
+  const handleCreateBtn = () => {
+    setCreating(!creating);
+    setUserSelected({});
+  };
+
   return (
     <>
       <h1>Gerenciar Usuários</h1>
+
+      <button
+        type="button"
+        onClick={handleCreateBtn}
+      >
+        Criar usuário
+      </button>
+
       <SearchBar handleFilter={handleFilter} />
+
       <UsersTable users={users} setUserSelected={setUserSelected} />
+
+      {creating && <FormUser action="create" />}
+
       {userSelected.id && (
       <UserDetails
         user={userSelected}
