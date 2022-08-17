@@ -52,7 +52,7 @@ function UserManagement() {
 
       <UsersTable users={users} setUserSelected={setUserSelected} />
 
-      {creating && <FormUser action="create" />}
+      {creating && <FormUser action="create" setCreating={setCreating} />}
 
       {userSelected.id && (
       <UserDetails

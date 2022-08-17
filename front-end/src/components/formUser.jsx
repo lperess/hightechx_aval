@@ -1,14 +1,36 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import api from '../services/api';
 
-function FormUser({ action }) {
+function FormUser({ action, setCreating }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [cpf, setCpf] = useState('');
   const [tel, setTel] = useState('');
   const [birthday, setBirthday] = useState('');
+  const [createError, setCreateError] = useState('');
 
-  const createUser = () => {};
+  const createUser = async () => {
+    const body = {
+      user: {
+        name, email, cpf, tel, birthday,
+      },
+    };
+
+    api.post('/users', body)
+      .then(() => {
+        setName('');
+        setEmail('');
+        setCpf('');
+        setTel('');
+        setBirthday('');
+        setCreateError('');
+        setCreating(false);
+      })
+      .catch((e) => {
+        setCreateError(e.message);
+      });
+  };
 
   const updateUser = () => {};
 
@@ -21,6 +43,8 @@ function FormUser({ action }) {
       updateUser();
     }
   };
+
+  const createErrorElement = <span>{createError}</span>;
 
   return (
     <form
@@ -86,12 +110,15 @@ function FormUser({ action }) {
       >
         {action === 'create' ? 'Registrar usuário' : 'Editar usuário'}
       </button>
+
+      {createError && createErrorElement}
     </form>
   );
 }
 
 FormUser.propTypes = {
   action: PropTypes.string.isRequired,
+  setCreating: PropTypes.func.isRequired,
 };
 
 export default FormUser;
