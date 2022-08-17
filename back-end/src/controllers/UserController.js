@@ -6,6 +6,7 @@ class UserController {
 
     this.findAll = this.findAll.bind(this);
     this.create = this.create.bind(this);
+    this.update = this.update.bind(this);
   }
 
   async findAll(_req, res, next) {
@@ -26,7 +27,18 @@ class UserController {
 
       return res.status(201).json(serviceResponse);
     } catch (error) {
-      return res.status(404).json(error);
+      return res.status(404).json(error.message);
+    }
+  }
+
+  async update(req, res) {
+    try {
+      const { user } = req.body;
+      const serviceResponse = await this.service.update(user);
+
+      return res.status(200).json(serviceResponse);
+    } catch (error) {
+      return res.status(404).json(error.message);
     }
   }
 }
