@@ -10,13 +10,14 @@ function UserManagement() {
   const [users, setUsers] = useState([]);
   const [userSelected, setUserSelected] = useState({});
   const [creating, setCreating] = useState(false);
+  const [changedUsers, setChangedUsers] = useState(0);
 
   useEffect(() => {
     api.get('/users').then((res) => {
       setAllUsers(res.data);
       setUsers(res.data);
     });
-  }, []);
+  }, [changedUsers]);
 
   const handleFilter = ({ query, type }) => {
     if (query) {
@@ -52,7 +53,13 @@ function UserManagement() {
 
       <UsersTable users={users} setUserSelected={setUserSelected} />
 
-      {creating && <FormUser action="create" setCreating={setCreating} />}
+      {creating && (
+      <FormUser
+        action="create"
+        setCreating={setCreating}
+        setChangedUsers={setChangedUsers}
+      />
+      )}
 
       {userSelected.id && (
       <UserDetails
