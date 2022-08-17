@@ -38,7 +38,7 @@ function FormUser({
   const updateUser = () => {
     const body = {
       user: {
-        name, email, cpf, tel, birthday,
+        id: user.id, name, email, cpf, tel, birthday,
       },
     };
 

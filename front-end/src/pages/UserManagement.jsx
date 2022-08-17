@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import FormUser from '../components/formUser';
+import FormUser from '../components/FormUser';
 import SearchBar from '../components/SearchBar';
 import UserDetails from '../components/UserDetails';
 import UsersTable from '../components/UsersTable';
