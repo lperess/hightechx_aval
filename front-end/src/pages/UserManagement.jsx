@@ -69,6 +69,7 @@ function UserManagement() {
         action="create"
         setCreating={setCreating}
         setChangedUsers={setChangedUsers}
+        setEditing={setEditing}
       />
       )}
 
