@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TableRow from './TableRow';
 
-function UsersTable({ users }) {
+function UsersTable({ users, setUserSelected }) {
   return (
     <table>
       <thead>
@@ -16,7 +16,13 @@ function UsersTable({ users }) {
       </thead>
 
       <tbody>
-        {users.map((user) => <TableRow key={user.id} user={user} />)}
+        {users.map((user) => (
+          <TableRow
+            key={user.id}
+            user={user}
+            setUserSelected={setUserSelected}
+          />
+        ))}
       </tbody>
     </table>
   );
@@ -24,6 +30,7 @@ function UsersTable({ users }) {
 
 UsersTable.propTypes = {
   users: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  setUserSelected: PropTypes.func.isRequired,
 };
 
 export default UsersTable;

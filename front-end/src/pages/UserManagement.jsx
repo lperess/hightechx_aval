@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import SearchBar from '../components/SearchBar';
+import UserDetails from '../components/UserDetails';
 import UsersTable from '../components/UsersTable';
 import api from '../services/api';
 
 function UserManagement() {
   const [allUsers, setAllUsers] = useState([]);
   const [users, setUsers] = useState([]);
+  const [userSelected, setUserSelected] = useState({});
 
   useEffect(() => {
     api.get('/users').then((res) => {
@@ -32,7 +34,13 @@ function UserManagement() {
     <>
       <h1>Gerenciar Usuários</h1>
       <SearchBar handleFilter={handleFilter} />
-      <UsersTable users={users} />
+      <UsersTable users={users} setUserSelected={setUserSelected} />
+      {userSelected.id && (
+      <UserDetails
+        user={userSelected}
+        setUserSelected={setUserSelected}
+      />
+      )}
     </>
   );
 }

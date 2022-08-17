@@ -1,14 +1,39 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function TableRow({ user }) {
+function TableRow({ user, setUserSelected }) {
   return (
     <tr>
       <td>{user.id}</td>
+
       <td>{user.name}</td>
+
       <td>{user.email}</td>
+
       <td>{user.cpf}</td>
-      <td>Ações</td>
+
+      <td>
+        <button
+          type="button"
+          onClick={() => setUserSelected(user)}
+        >
+          Detalhes
+        </button>
+
+        <button
+          type="button"
+          // onClick={() => setUserSelected(user)}
+        >
+          Editar
+        </button>
+
+        <button
+          type="button"
+          // onClick={() => setUserSelected(user)}
+        >
+          Excluir
+        </button>
+      </td>
     </tr>
   );
 }
@@ -24,6 +49,7 @@ TableRow.propTypes = {
     tel: PropTypes.string,
     updatedAt: PropTypes.string,
   }).isRequired,
+  setUserSelected: PropTypes.func.isRequired,
 };
 
 export default TableRow;
