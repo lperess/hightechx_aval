@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
-function SearchBar() {
+function SearchBar({ handleFilter }) {
   const [query, setQuery] = useState('');
   const [typeOfSearch, setTypeOfSearch] = useState('name');
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    handleFilter({
+      query,
+      type: typeOfSearch,
+    });
   };
 
   return (
@@ -36,13 +41,15 @@ function SearchBar() {
         </select>
       </label>
 
-      <button
-        type="submit"
-      >
+      <button type="submit">
         Buscar
       </button>
     </form>
   );
 }
+
+SearchBar.propTypes = {
+  handleFilter: PropTypes.func.isRequired,
+};
 
 export default SearchBar;
