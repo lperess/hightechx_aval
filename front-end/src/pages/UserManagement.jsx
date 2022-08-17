@@ -76,6 +76,7 @@ function UserManagement() {
         setCreating={setCreating}
         setChangedUsers={setChangedUsers}
         user={allUsers.find((user) => user.id === editingID)}
+        setEditing={setEditing}
       />
       )}
 

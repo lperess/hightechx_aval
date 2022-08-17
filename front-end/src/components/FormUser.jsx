@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import api from '../services/api';
 
 function FormUser({
-  action, setCreating, setChangedUsers, user,
+  action, setCreating, setChangedUsers, user, setEditing,
 }) {
   const [name, setName] = useState(action === 'create' ? '' : user.name);
   const [email, setEmail] = useState(action === 'create' ? '' : user.email);
@@ -51,6 +51,7 @@ function FormUser({
         setBirthday('');
         setReqError('');
         setChangedUsers((prev) => prev + 1);
+        setEditing(false);
       })
       .catch((e) => {
         setReqError(e.message);
@@ -162,6 +163,7 @@ FormUser.propTypes = {
   action: PropTypes.string.isRequired,
   setCreating: PropTypes.func.isRequired,
   setChangedUsers: PropTypes.func.isRequired,
+  setEditing: PropTypes.func.isRequired,
   user: PropTypes.shape(),
 };
 
