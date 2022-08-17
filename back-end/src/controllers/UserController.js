@@ -5,6 +5,7 @@ class UserController {
     this.service = service;
 
     this.findAll = this.findAll.bind(this);
+    this.create = this.create.bind(this);
   }
 
   async findAll(_req, res, next) {
