@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import api from '../services/api';
 
-function FormUser({ action, setCreating, setChangedUsers }) {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [cpf, setCpf] = useState('');
-  const [tel, setTel] = useState('');
-  const [birthday, setBirthday] = useState('');
-  const [createError, setCreateError] = useState('');
+function FormUser({
+  action, setCreating, setChangedUsers, user,
+}) {
+  const [name, setName] = useState(action === 'create' ? '' : user.name);
+  const [email, setEmail] = useState(action === 'create' ? '' : user.email);
+  const [cpf, setCpf] = useState(action === 'create' ? '' : user.cpf);
+  const [tel, setTel] = useState(action === 'create' ? '' : (user.tel || ''));
+  const [birthday, setBirthday] = useState(action === 'create' ? '' : (user.birthday || ''));
+  const [reqError, setReqError] = useState('');
 
   const createUser = async () => {
     const body = {
@@ -24,16 +26,36 @@ function FormUser({ action, setCreating, setChangedUsers }) {
         setCpf('');
         setTel('');
         setBirthday('');
-        setCreateError('');
+        setReqError('');
         setCreating(false);
         setChangedUsers((prev) => prev + 1);
       })
       .catch((e) => {
-        setCreateError(e.message);
+        setReqError(e.message);
       });
   };
 
-  const updateUser = () => {};
+  const updateUser = () => {
+    const body = {
+      user: {
+        name, email, cpf, tel, birthday,
+      },
+    };
+
+    api.put('/users', body)
+      .then(() => {
+        setName('');
+        setEmail('');
+        setCpf('');
+        setTel('');
+        setBirthday('');
+        setReqError('');
+        setChangedUsers((prev) => prev + 1);
+      })
+      .catch((e) => {
+        setReqError(e.message);
+      });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -63,7 +85,7 @@ function FormUser({ action, setCreating, setChangedUsers }) {
     return !(checks === 3);
   };
 
-  const createErrorElement = <span>{createError}</span>;
+  const errorElement = <span>{reqError}</span>;
 
   return (
     <form
@@ -131,7 +153,7 @@ function FormUser({ action, setCreating, setChangedUsers }) {
         {action === 'create' ? 'Registrar usuário' : 'Editar usuário'}
       </button>
 
-      {createError && createErrorElement}
+      {reqError && errorElement}
     </form>
   );
 }
@@ -140,6 +162,11 @@ FormUser.propTypes = {
   action: PropTypes.string.isRequired,
   setCreating: PropTypes.func.isRequired,
   setChangedUsers: PropTypes.func.isRequired,
+  user: PropTypes.shape(),
+};
+
+FormUser.defaultProps = {
+  user: {},
 };
 
 export default FormUser;

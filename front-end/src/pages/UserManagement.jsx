@@ -10,6 +10,8 @@ function UserManagement() {
   const [users, setUsers] = useState([]);
   const [userSelected, setUserSelected] = useState({});
   const [creating, setCreating] = useState(false);
+  const [editing, setEditing] = useState(false);
+  const [editingID, setEditingID] = useState(0);
   const [changedUsers, setChangedUsers] = useState(0);
 
   useEffect(() => {
@@ -35,6 +37,7 @@ function UserManagement() {
 
   const handleCreateBtn = () => {
     setCreating(!creating);
+    setEditing(false);
     setUserSelected({});
   };
 
@@ -51,13 +54,28 @@ function UserManagement() {
 
       <SearchBar handleFilter={handleFilter} />
 
-      <UsersTable users={users} setUserSelected={setUserSelected} />
+      <UsersTable
+        users={users}
+        setUserSelected={setUserSelected}
+        setCreating={setCreating}
+        setEditing={setEditing}
+        setEditingID={setEditingID}
+      />
 
       {creating && (
       <FormUser
         action="create"
         setCreating={setCreating}
         setChangedUsers={setChangedUsers}
+      />
+      )}
+
+      {editing && (
+      <FormUser
+        action="edit"
+        setCreating={setCreating}
+        setChangedUsers={setChangedUsers}
+        user={allUsers.find((user) => user.id === editingID)}
       />
       )}
 

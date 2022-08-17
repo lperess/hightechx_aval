@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TableRow from './TableRow';
 
-function UsersTable({ users, setUserSelected }) {
+function UsersTable({
+  users, setUserSelected, setCreating, setEditing, setEditingID,
+}) {
   return (
     <table>
       <thead>
@@ -21,6 +23,9 @@ function UsersTable({ users, setUserSelected }) {
             key={user.id}
             user={user}
             setUserSelected={setUserSelected}
+            setCreating={setCreating}
+            setEditing={setEditing}
+            setEditingID={setEditingID}
           />
         ))}
       </tbody>
@@ -31,6 +36,9 @@ function UsersTable({ users, setUserSelected }) {
 UsersTable.propTypes = {
   users: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   setUserSelected: PropTypes.func.isRequired,
+  setCreating: PropTypes.func.isRequired,
+  setEditing: PropTypes.func.isRequired,
+  setEditingID: PropTypes.func.isRequired,
 };
 
 export default UsersTable;
