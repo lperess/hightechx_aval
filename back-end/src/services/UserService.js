@@ -47,7 +47,7 @@ class UserService {
           active: 0,
         },
         {
-          where: id,
+          where: { id },
         },
       );
 
