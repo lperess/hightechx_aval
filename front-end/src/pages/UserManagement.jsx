@@ -61,6 +61,7 @@ function UserManagement() {
         setCreating={setCreating}
         setEditing={setEditing}
         setEditingID={setEditingID}
+        setChangedUsers={setChangedUsers}
       />
 
       {creating && (

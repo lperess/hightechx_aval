@@ -1,13 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import api from '../services/api';
 
 function TableRow({
-  user, setUserSelected, setCreating, setEditing, setEditingID,
+  user, setUserSelected, setCreating, setEditing, setEditingID, setChangedUsers,
 }) {
   const handleEditBtn = () => {
     setEditing((prev) => !prev);
     setEditingID(user.id);
     setCreating(false);
+  };
+
+  const handleDeleteBtn = () => {
+    api.delete(`/users/${user.id}`).then(() => {
+      setChangedUsers((prev) => prev + 1);
+    });
   };
 
   return (
@@ -37,7 +44,7 @@ function TableRow({
 
         <button
           type="button"
-          // onClick={() => setUserSelected(user)}
+          onClick={handleDeleteBtn}
         >
           Excluir
         </button>
@@ -61,6 +68,7 @@ TableRow.propTypes = {
   setCreating: PropTypes.func.isRequired,
   setEditing: PropTypes.func.isRequired,
   setEditingID: PropTypes.func.isRequired,
+  setChangedUsers: PropTypes.func.isRequired,
 };
 
 export default TableRow;

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import TableRow from './TableRow';
 
 function UsersTable({
-  users, setUserSelected, setCreating, setEditing, setEditingID,
+  users, setUserSelected, setCreating, setEditing, setEditingID, setChangedUsers,
 }) {
   return (
     <table>
@@ -26,6 +26,7 @@ function UsersTable({
             setCreating={setCreating}
             setEditing={setEditing}
             setEditingID={setEditingID}
+            setChangedUsers={setChangedUsers}
           />
         ))}
       </tbody>
@@ -39,6 +40,7 @@ UsersTable.propTypes = {
   setCreating: PropTypes.func.isRequired,
   setEditing: PropTypes.func.isRequired,
   setEditingID: PropTypes.func.isRequired,
+  setChangedUsers: PropTypes.func.isRequired,
 };
 
 export default UsersTable;
