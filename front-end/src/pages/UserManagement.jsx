@@ -16,8 +16,9 @@ function UserManagement() {
 
   useEffect(() => {
     api.get('/users').then((res) => {
-      setAllUsers(res.data);
-      setUsers(res.data);
+      const activeUsers = res.data.filter((user) => user.active);
+      setAllUsers(activeUsers);
+      setUsers(activeUsers);
     });
   }, [changedUsers]);
 
