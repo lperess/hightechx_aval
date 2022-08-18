@@ -18,6 +18,7 @@
 
 ### Rodando a aplicação
 <li>No diretório do back-end, execute o comando <code>npm start</code></li>
+<li>Abra o diretório do front-end em outra janela</li>
 <li>No diretório do front-end, execute o comando <code>npm start</code></li>
 
 ### Utilizando a aplicação
