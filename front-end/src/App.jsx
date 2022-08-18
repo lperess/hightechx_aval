@@ -1,12 +1,19 @@
 import React from 'react';
+import {
+  BrowserRouter, Routes, Route, Navigate,
+} from 'react-router-dom';
+import Login from './components/Login';
 import UserManagement from './pages/UserManagement';
 
 function App() {
   return (
-    <>
-      <h1>CRUD de usuários</h1>
-      <UserManagement />
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/usermanagement" element={<UserManagement />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

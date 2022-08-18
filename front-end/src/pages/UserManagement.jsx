@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import FormUser from '../components/FormUser';
 import SearchBar from '../components/SearchBar';
 import UserDetails from '../components/UserDetails';
 import UsersTable from '../components/UsersTable';
 import api from '../services/api';
+import { getLocalStorage } from '../services/localStorage';
 
 function UserManagement() {
   const [allUsers, setAllUsers] = useState([]);
@@ -13,13 +15,28 @@ function UserManagement() {
   const [editing, setEditing] = useState(false);
   const [editingID, setEditingID] = useState(0);
   const [changedUsers, setChangedUsers] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    api.get('/users').then((res) => {
-      const activeUsers = res.data.filter((user) => user.active);
-      setAllUsers(activeUsers);
-      setUsers(activeUsers);
-    });
+    const token = getLocalStorage('token');
+
+    const config = {
+      headers: {
+        authorization: token,
+      },
+    };
+
+    api.get('/users', config)
+      .then((res) => {
+        const activeUsers = res.data.filter((user) => user.active);
+        setAllUsers(activeUsers);
+        setUsers(activeUsers);
+      })
+      .catch((e) => {
+        if (e.response.status === 401) {
+          navigate('/login');
+        }
+      });
   }, [changedUsers]);
 
   const handleFilter = ({ query, type }) => {
