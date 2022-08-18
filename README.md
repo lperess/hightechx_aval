@@ -21,6 +21,9 @@
 <li>Abra o diretório do front-end em outra janela do terminal</li>
 <li>No diretório do front-end, execute o comando <code>npm start</code></li>
 
+### Teste
+<li>No diretório do back-end, execute o comando <code>npm run test</code></li>
+
 ### Utilizando a aplicação
 <li>Ao fazer login com um usuário que não tem permissão de admin o usuário é redirecionado para a página de login novamente</li>
 <li>Exemplo de usuário sem permissão de admin: <code>email: johndoe1@email.com</code> e <code>senha: 123456</code> </li>
