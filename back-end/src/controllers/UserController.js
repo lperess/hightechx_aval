@@ -8,16 +8,33 @@ class UserController {
     this.create = this.create.bind(this);
     this.update = this.update.bind(this);
     this.inactivate = this.inactivate.bind(this);
+    this.login = this.login.bind(this);
   }
 
-  async findAll(_req, res, next) {
+  async login(req, res) {
+    try {
+      const { email, password } = req.body;
+      const serviceResponse = await this.service.login(email, password);
+
+      if (!serviceResponse) {
+        return res
+          .status(404)
+          .json({ message: 'Usuário não encontrado ou senha inválida' });
+      }
+
+      return res.status(200).json(serviceResponse);
+    } catch (error) {
+      return res.status(500).end();
+    }
+  }
+
+  async findAll(_req, res) {
     try {
       const serviceResponse = await this.service.findAll();
 
       return res.status(200).json(serviceResponse);
-    } catch (e) {
-      next(e);
-      return null;
+    } catch (error) {
+      return res.status(500).end();
     }
   }
 
@@ -28,7 +45,7 @@ class UserController {
 
       return res.status(201).json(serviceResponse);
     } catch (error) {
-      return res.status(404).json(error.message);
+      return res.status(500).end();
     }
   }
 
@@ -39,7 +56,7 @@ class UserController {
 
       return res.status(200).json(serviceResponse);
     } catch (error) {
-      return res.status(404).json(error.message);
+      return res.status(500).end();
     }
   }
 
@@ -50,7 +67,7 @@ class UserController {
 
       return res.status(200).json(serviceResponse);
     } catch (error) {
-      return res.status(404).json(error.message);
+      return res.status(500).end();
     }
   }
 }

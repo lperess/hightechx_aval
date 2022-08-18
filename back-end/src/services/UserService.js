@@ -1,8 +1,27 @@
 const { User } = require('../database/models');
+const { jwtGenerator } = require('../utils/auth');
 
 class UserService {
   constructor(model = User) {
     this.model = model;
+  }
+
+  async login(email, password) {
+    const user = await this.model.findOne({ where: { email } });
+
+    if (!user || user.password !== password) {
+      return null;
+    }
+
+    const payload = {
+      id: user.dataValues.id,
+      email: user.dataValues.email,
+      role: user.dataValues.role,
+    };
+
+    const token = jwtGenerator(payload);
+
+    return token;
   }
 
   async findAll() {
