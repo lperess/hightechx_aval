@@ -32,7 +32,15 @@ class UserService {
 
   async create(user) {
     try {
-      const modelResponse = await this.model.create(user);
+      const userToCreate = {
+        ...user,
+        active: 1,
+        role: 'user',
+        password: '',
+        birthday: null,
+      };
+
+      const modelResponse = await this.model.create(userToCreate);
 
       return modelResponse;
     } catch (error) {
